@@ -57,3 +57,40 @@ console.log('3');
 - `Promse` 实例生成后，可以使用 `then` 方法分别指定 `resolved` 和 `rejected` 状态的回调函数；也可以用 `then` 方法指定 `resolved` 状态的回调函数，用 `catch` 方法指定 `rejected` 状态的回调函数。
 
 **注意：**一般来说，调用 `resolve` 或 `reject` 以后，Promise 的使命就完成了，后继操作应该放到 `then` 方法里面，而不应该直接写在 resolve 或 reject 的后面，最好在它们前面加上 `return` 语句。
+
+## 4. Promise.prototype.then()
+
+`then` 方法的作用是为 Promise 实例添加状态改变时的回调函数。
+
+`then` 方法的第一个参数是 `resolved` 状态的回调函数，第二个参数是可选的，是 `rejected` 状态的回调函数。
+
+`then` 方法返回的是一个新的 `Promise` 实例，注意不是原来那个 Promise 实例。因此可以采用链式写法，即 then 方法后面再调用另一个 then 方法。
+
+采用链式的 `then`，可以指定一组按照次序调用的回调函数。此时，前一个回调函数，有可能返回的还是一个 `Promise` 对象（即有异步操作），这时后一个回调函数，就会等待该 `Promise` 对象的状态发生变化，才会被调用。
+
+## 5. Promise.prototype.catch()
+
+`Promise.prototype.catch` 方法是 `.then(null, rejection)` 或 `.then(undefined, rejection)` 的别名，用于指定发生错误时的回调函数。
+
+`catch` 方法可以捕获 `then` 方法的错误。
+
+Promise 对象的错误具有“冒泡”性质，会一直向后传递，直到被捕获为止。
+
+一般来讲，不要在 `then` 方法里面定义 `reject` 状态的回调函数，即then的第二个参数，用 `catch` 方法捕获错误。
+
+跟传统的 `try/catch` 代码块不同的是，如果没有使用 catch 方法指定错误处理的回调函数，Promise 对象抛出的错误不会传递到外层代码，即不会有任何反应。
+
+```javascript
+promise
+    .then(function (data) {
+        //success
+    })
+    .then(function (data) {
+        //success
+    })
+    .catch(function (error) {
+        //error
+    });
+
+// catch总会捕获前面抛出的错误，包括then抛出的。
+```
