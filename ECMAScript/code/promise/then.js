@@ -21,4 +21,7 @@ func()
 	})
 	.catch(() => {
 		console.log('fail...');
-	});
+	})
+	.finally(()=>{
+		console.log('finally...');
+	})
