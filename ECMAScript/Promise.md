@@ -56,7 +56,7 @@ console.log('3');
 - `reject` 函数的作用是将 Promise 对象的状态从 pending 变为 rejected，在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
 - `Promse` 实例生成后，可以使用 `then` 方法分别指定 `resolved` 和 `rejected` 状态的回调函数；也可以用 `then` 方法指定 `resolved` 状态的回调函数，用 `catch` 方法指定 `rejected` 状态的回调函数。
 
-**注意：**一般来说，调用 `resolve` 或 `reject` 以后，Promise 的使命就完成了，后继操作应该放到 `then` 方法里面，而不应该直接写在 resolve 或 reject 的后面，最好在它们前面加上 `return` 语句。
+**注意：** 一般来说，调用 `resolve` 或 `reject` 以后，Promise 的使命就完成了，后继操作应该放到 `then` 方法里面，而不应该直接写在 resolve 或 reject 的后面，最好在它们前面加上 `return` 语句。
 
 ## 4. Promise.prototype.then()
 
@@ -106,4 +106,67 @@ promise
 .then( result => {/*todo*/})
 .catch( error => {/*todo*/})
 .finally( ()=> {/*todo*/});
+```
+
+## 6. Promise.all()
+
+`Promise.all()` 方法用于将多个 Promise 实例，包装成一个新的 Promise 实例。
+
+```javascript
+const promise = Promise.all([p1,p2,p3]);
+```
+
+`Promise.all()` 方法接收一个数组作为参数，p1,p2,p3都是Promise实例，如果不是，就会先调用 `Promise.resolve` 方法，将参数转为 Promise 实例，再进一步处理。all方法参数可以不是数组，但必须具有 Iterator 接口，且返回的每个成员都是 Promise 实例。
+
+promise 的状态由p1、p2、p3决定，分成两种情况：
+
+- p1,p2,p3的状态都变成 `fulfilled`，promise 的状态才会变成 `fulfilled`，此时，p1,p2,p3的返回值组成一个数组，传递给 promise 的回调函数。
+- 只要p1,p2,p3之间有一个被 `rejected`，promise 的状态就变成 `rejected`，此时第一个被 reject 的实例的返回值，会传递给 promise 的回调函数。
+
+**注意：** 如果p1,p2有自己的catch方法，则其抛出的错误就会被自己的catch方法捕获，
+然后catch方法返回的是一个新的 Promise 实例。p1或p2指向的实际上就是这个实例。
+该实例执行完catch方法后，也会变成resolved，
+最后导致Promise.all()方法参数里面的两个实例都是resolved，
+因此会调用Promise.all的then方法指定的回调函数，而不会调用catch方法指定的回调函数。如果p1,p2都没有自己的catch方法，就会调用Promise.all()的catch方法。
+
+## 7. Promise.race()
+
+`Promise.race()` 方法同样是将多个 Promise 实例，包装成一个新的 Promise 实例。
+
+```javascript
+const p = Promise.race([p1,p2,p3]);
+```
+
+p1,p2,p3中任一个实例率先改变状态，p的状态就跟着改变。率先改变的 Promise 实例的返回值，就传递给 p 的回调函数。
+
+如果 race 的参数不是 Promise 实例，就会先调用 `Promise.resolve()` 方法，将参数转为 Promise 实例，再进一步处理。
+
+## 8. Promise.resolve()
+
+有时需要将现有对象转为 Promise 对象，`Promise.resolve()` 方法就起到这个作用。
+
+```javascript
+Promise.resolve('foo');
+// 等价于
+new Promise(resolve => resolve('foo'));
+```
+
+`Promise.resolve()` 方法的参数分为四种情况：
+
+- 参数是一个 Promise 实例。如果参数是 Promise 实例，那么 `Promise.resolve` 将不做任何修改、原封不动地返回这个实例。
+- 参数是一个 `thenable` 对象。thenable 对象指的是具有 then 方法的对象。
+- 参数不是具有 then 方法的对象，或根本就不是对象。如果参数是一个原始值，或者是一个不具有 then 方法的对象，则 Promise.resolve 方法返回一个新的 Promise 对象，状态为resolved。
+- 不带有任何参数。此方法允许调用时不带参数，直接返回一个 resolved 状态的 Promise 对象。
+
+```javascript
+// thenable 对象
+let thenable = {
+    then: function(resolve,reject) {
+        ('resolve...');
+    }
+}
+
+// 没有参数，p就是一个 Promise 对象
+let p = Promise.resolve();
+p.then(()=>{/*todo*/})
 ```
