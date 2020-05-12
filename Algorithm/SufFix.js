@@ -1,36 +1,6 @@
 /**
  * 中缀表达式转后缀表达式
  */
-
-/**
- * 表达式栈
- */
-class Stack {
-	constructor() {
-		this.data = [];
-	}
-
-	push(val) {
-		this.data.push(val);
-	}
-
-	pop() {
-		return this.data.pop();
-	}
-
-	clear() {
-		this.data = [];
-	}
-
-	getData(index) {
-		return this.data[index];
-	}
-
-	getLength() {
-		return this.data.length;
-	}
-}
-
 class SufFix {
 	constructor() {
 		this.expression = `1*9/3+3-5*5-1+2-9/3*2`;
@@ -160,6 +130,33 @@ class SufFix {
 		return result.pop();
 	}
 }
+
+class Stack {
+	constructor() {
+		this.data = [];
+	}
+
+	push(val) {
+		this.data.push(val);
+	}
+
+	pop() {
+		return this.data.pop();
+	}
+
+	clear() {
+		this.data = [];
+	}
+
+	getData(index) {
+		return this.data[index];
+	}
+
+	getLength() {
+		return this.data.length;
+	}
+}
+
 
 let suffix = new SufFix();
 suffix.parse();
