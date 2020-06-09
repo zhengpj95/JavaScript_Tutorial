@@ -14,10 +14,10 @@ const binarySearch = function (nums, target) {
 	}
 
 	let low = 0;
-	let heigh = len - 1;
+	let high = len - 1;
 
-	while (low <= heigh) {
-		let mid = Math.floor((low + heigh + 1) / 2);
+	while (low <= high) {
+		let mid = Math.floor((low + high + 1) / 2);
 		let temp = nums[mid];
 
 		if (temp == target) {
@@ -27,7 +27,7 @@ const binarySearch = function (nums, target) {
 		if (temp < target) {
 			low = mid + 1;
 		} else if (temp > target) {
-			heigh = mid - 1;
+			high = mid - 1;
 		}
 	}
 	return -1;
