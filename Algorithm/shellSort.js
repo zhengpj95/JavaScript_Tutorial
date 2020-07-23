@@ -7,16 +7,24 @@
  */
 
 /**
- * @param {number[]} nums 
+ * Time complexity: O(n^2) - O(n^1.3)
+ * @param {number[]} nums
  */
 const shellSort = function (nums) {
-	let n = nums.length;
-	let time = Math.floor(n / 2);
-	while (time > 1) {
-
+	let gap = Math.floor(nums.length / 2);
+	while (gap > 0) {
+		for (let i = gap; i < nums.length; i++) {
+			let j = i;
+			let temp = nums[i];
+			for (; nums[j - gap] > temp; j -= gap) {
+				nums[j] = nums[j - gap];
+			}
+			nums[j] = temp;
+		}
+		gap = Math.floor(gap / 2);
 	}
-	console.log(nums);
+	return nums;
 };
 
 let arr = [1, 5, 7, 8, 2, 3, 4, 6, 9, 10];
-shellSort(arr);
+console.log(shellSort(arr));
