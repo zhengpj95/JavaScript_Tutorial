@@ -66,21 +66,83 @@ class SingleLinkedList {
 	}
 
 	/**
-	 * @param {number} index
+	 * 链表的第一个数据结点从0开始算，即头结点不算
+	 * @param {number} index 从0开始
 	 * @param {LinkedNode} node
 	 * @returns {boolean}
 	 */
-	insertByIndex(index, node) {}
+	insertByIndex(index, node) {
+		if (index >= this.count) {
+			return false;
+		}
+
+		if (this.isEmpty()) {
+			this.head.next = node;
+			this.count++;
+			return true;
+		}
+
+		let currNode = this.head.next; //第一个数据结点
+		let idx = 0;
+		while (currNode) {
+			if (idx === index) {
+				break;
+			}
+			currNode = currNode.node;
+			idx++;
+		}
+
+		let nextNode = currNode.next;
+		currNode.next = node;
+		node.next = nextNode;
+		this.count++;
+		return true;
+	}
+
+	/**
+	 * 链表的第一个数据结点从0开始算，即头结点不算
+	 * @param {number} index 从0开始算
+	 * @returns {LinkedNode}
+	 */
+	deleteByIndex(index) {
+		if (index >= this.count || index < 0 || this.isEmpty()) {
+			return null;
+		}
+
+		let curNode = this.head;
+		let idx = -1;
+		while (curNode.next) {
+			idx++;
+			if (idx === index) {
+				break;
+			}
+			curNode = curNode.next;
+		}
+
+		let deleteNode = curNode.next;
+		curNode.next = deleteNode.next;
+		this.count--;
+		return deleteNode;
+	}
 
 	/**
 	 * @param {number} index
 	 * @returns {LinkedNode}
 	 */
-	deleteByIndex(index) {}
+	getElementByIndex(index) {
+		if (index < 0 || index >= this.count || this.isEmpty()) {
+			return null;
+		}
 
-	/**
-	 * @param {number} index
-	 * @returns {LinkedNode}
-	 */
-	getElementByIndex(index) {}
+		let curNode = this.head.next;
+		let idx = 0;
+		while (curNode) {
+			if (idx === index) {
+				break;
+			}
+			curNode = curNode.next;
+			idx++;
+		}
+		return curNode;
+	}
 }
