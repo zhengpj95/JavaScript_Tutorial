@@ -99,7 +99,26 @@ class CircleLinkedList {
 	 * @param {number} index 从0开始算
 	 * @returns {LinkedNode}
 	 */
-	deleteByIndex(index) {}
+	deleteByIndex(index) {
+		if (index < 0 || index >= this.count || this.isEmpty()) {
+			return null;
+		}
+		let curNode = this.head;
+		let idx = -1;
+		while (curNode.next) {
+			idx++;
+			if (idx === index) {
+				break;
+			}
+			curNode = curNode.next;
+		}
+
+		let resNode = curNode.next;
+		curNode.next = resNode.next;
+		this.count--;
+		resNode.next = null;
+		return resNode;
+	}
 
 	destroy() {
 		this.head.next = this.head;
@@ -132,5 +151,8 @@ list.insetTail(node4);
 list.print();
 list.insertByIndex(1, node6);
 // console.log(list);
-
+list.print();
+let node = list.deleteByIndex(list.size() - 1);
+console.log(node);
+console.log(list.size());
 list.print();
