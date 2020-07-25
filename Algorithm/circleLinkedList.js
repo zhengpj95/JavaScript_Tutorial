@@ -25,7 +25,6 @@ class CircleLinkedList {
 	}
 
 	/**
-	 *
 	 * @param {LinkedNode} node
 	 * @returns {boolean}
 	 */
@@ -33,18 +32,42 @@ class CircleLinkedList {
 		if (!node) {
 			return false;
 		}
-		if (this.isEmpty()) {
-			this.head.next = node;
-			node.next = this.head;
-		} else {
-			node.next = this.head.next;
-			this.head.next = node;
-		}
+		// if (this.isEmpty()) {
+		// 	this.head.next = node;
+		// 	node.next = this.head;
+		// } else {
+		// 	node.next = this.head.next;
+		// 	this.head.next = node;
+		// }
+		node.next = this.head.next;
+		this.head.next = node;
 		this.count++;
 		return true;
 	}
 
-	insetTail(node) {}
+	/**
+	 * @param {LinkedNode} node
+	 * @returns {boolean}
+	 */
+	insetTail(node) {
+		if (!node) {
+			return false;
+		}
+		if (this.isEmpty()) {
+			this.head.next = node;
+			node.next = this.head;
+		} else {
+			// 找到最后一个结点
+			let curNode = this.head.next;
+			for (let i = 0; i < this.count - 1; i++) {
+				curNode = curNode.next;
+			}
+			curNode.next = node;
+			node.next = this.head;
+		}
+		this.count++;
+		return true;
+	}
 
 	insertByIndex(index, node) {}
 
@@ -70,9 +93,13 @@ let list = new CircleLinkedList();
 let node1 = new LinkedNode(11);
 let node2 = new LinkedNode(22);
 let node3 = new LinkedNode(33);
+let node4 = new LinkedNode(44);
+let node5 = new LinkedNode(55);
 list.insertHead(node1);
-list.insertHead(node3);
 list.insertHead(node2);
+list.insertHead(node3);
+list.insetTail(node5);
+list.insetTail(node4);
 console.log(list);
 
 list.print();
