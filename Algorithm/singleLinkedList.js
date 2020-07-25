@@ -70,29 +70,25 @@ class SingleLinkedList {
 	 * @returns {boolean}
 	 */
 	insertByIndex(index, node) {
-		if (index >= this.count) {
+		if (index > this.count || index < 0) {
 			return false;
 		}
 
 		if (this.isEmpty()) {
 			this.head.next = node;
-			this.count++;
-			return true;
-		}
-
-		let currNode = this.head.next; //第一个数据结点
-		let idx = 0;
-		while (currNode) {
-			if (idx === index) {
-				break;
+		} else {
+			let curNode = this.head;
+			let idx = -1;
+			while (curNode.next) {
+				idx++;
+				if (idx === index) {
+					break;
+				}
+				curNode = curNode.next;
 			}
-			currNode = currNode.node;
-			idx++;
+			node.next = curNode.next;
+			curNode.next = node;
 		}
-
-		let nextNode = currNode.next;
-		currNode.next = node;
-		node.next = nextNode;
 		this.count++;
 		return true;
 	}
@@ -120,6 +116,7 @@ class SingleLinkedList {
 		let deleteNode = curNode.next;
 		curNode.next = deleteNode.next;
 		this.count--;
+		deleteNode.next = null;
 		return deleteNode;
 	}
 
@@ -163,6 +160,9 @@ let node4 = new LinkedNode(44);
 list.insertHead(node1);
 list.insertHead(node2);
 list.insertTail(node4);
-list.insertTail(node3);
+list.insertByIndex(1, node3);
 console.log(list);
+list.print();
+console.log(`delete 0 : `, list.deleteByIndex(0));
+console.log(`get 1 : `, list.getElementByIndex(1));
 list.print();
