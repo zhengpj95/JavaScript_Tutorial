@@ -141,6 +141,11 @@ class SingleLinkedList {
 		return curNode;
 	}
 
+	destroy() {
+		this.head.next = 0;
+		this.count = 0;
+	}
+
 	print() {
 		let str = '';
 		let curNode = this.head.next;
@@ -166,3 +171,6 @@ list.print();
 console.log(`delete 0 : `, list.deleteByIndex(0));
 console.log(`get 1 : `, list.getElementByIndex(1));
 list.print();
+console.log(`========destroy========`);
+list.destroy();
+console.log(list);
