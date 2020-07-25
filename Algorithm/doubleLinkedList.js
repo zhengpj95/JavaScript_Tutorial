@@ -71,17 +71,66 @@ class DoubleLinkedList {
 	}
 
 	/**
-	 * @param {number} index
+	 * 第一个数据结点从0开始计算
+	 * @param {number} index 从0开始
 	 * @param {LinedNode} node
 	 * @returns {boolean}
 	 */
-	insertByIndex(index, node) {}
+	insertByIndex(index, node) {
+		if (index < 0 || index > this.count) {
+			return false;
+		}
+
+		if (this.isEmpty()) {
+			this.head.next = node;
+			node.pre = this.head;
+		} else {
+			let idx = -1;
+			let curNode = this.head.next;
+			while (curNode.next) {
+				idx++;
+				if (idx == index) {
+					break;
+				}
+				curNode = curNode.next;
+			}
+			node.next = curNode;
+			curNode.pre.next = node;
+			node.pre = curNode.pre;
+			curNode.pre = node;
+		}
+
+		this.count++;
+		return true;
+	}
 
 	/**
 	 * @param {number} index
 	 * @returns {LinkedNode}
 	 */
-	deleteByIndex(index) {}
+	deleteByIndex(index) {
+		if (index < 0 || index >= this.count || this.isEmpty()) {
+			return null;
+		}
+
+		let curNode = this.head.next;
+		let idx = -1;
+		while (curNode.next) {
+			idx++;
+			if (idx === index) {
+				break;
+			}
+			curNode = curNode.next;
+		}
+		curNode.pre.next = curNode.next;
+		// 非尾结点
+		if (curNode.next) {
+			curNode.next.pre = curNode.pre;
+		}
+		curNode.next = null;
+		curNode.pre = null;
+		return curNode;
+	}
 
 	destroy() {
 		this.head.next = null;
@@ -105,10 +154,17 @@ let node2 = new LinkedNode(22);
 let node3 = new LinkedNode(33);
 let node4 = new LinkedNode(44);
 let node5 = new LinkedNode(55);
+let node6 = new LinkedNode(66);
 list.insertHead(node3);
 list.insertHead(node1);
 list.insertHead(node2);
 list.insertTail(node5);
-list.insertTail(node4);
-console.log(list);
+list.insertByIndex(2, node6);
+list.insertByIndex(0, node4);
+// console.log(list);
 list.print();
+let node = list.deleteByIndex(2);
+console.log(node);
+list.print();
+list.destroy();
+console.log(list);
