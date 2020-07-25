@@ -145,4 +145,14 @@ class SingleLinkedList {
 		}
 		return curNode;
 	}
+
+	print() {
+		let str = '';
+		let curNode = this.head.next;
+		while (curNode) {
+			str += curNode.val + ' - ';
+			curNode = curNode.next;
+		}
+		console.log(str);
+	}
 }
