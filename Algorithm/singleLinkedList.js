@@ -31,13 +31,11 @@ class SingleLinkedList {
 		if (!node) {
 			return false;
 		}
-		if (!this.head.next) {
+		if (this.isEmpty()) {
 			this.head.next = node;
-			node.head = null;
 		} else {
-			let nextNode = this.head.next;
+			node.next = this.head.next;
 			this.head.next = node;
-			node.next = nextNode;
 		}
 		this.count++;
 		return true;
@@ -150,9 +148,19 @@ class SingleLinkedList {
 		let str = '';
 		let curNode = this.head.next;
 		while (curNode) {
-			str += curNode.val + ' - ';
+			str += curNode.val + ' ';
 			curNode = curNode.next;
 		}
 		console.log(str);
 	}
 }
+
+let list = new SingleLinkedList();
+let node1 = new LinkedNode(11);
+let node2 = new LinkedNode(22);
+let node3 = new LinkedNode(33);
+list.insertHead(node1);
+list.insertHead(node2);
+list.insertHead(node3);
+console.log(list);
+list.print();
