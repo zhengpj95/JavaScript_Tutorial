@@ -50,15 +50,15 @@ class SingleLinkedList {
 			return false;
 		}
 
-		if (!this.head.next) {
+		if (this.isEmpty()) {
 			this.head.next = node;
 		} else {
-			while (this.head.next) {
-				this.head = this.head.next;
+			let curNode = this.head.next;
+			while (curNode.next) {
+				curNode = curNode.next;
 			}
-			this.head.next = node;
+			curNode.next = node;
 		}
-
 		this.count++;
 		return true;
 	}
@@ -159,8 +159,10 @@ let list = new SingleLinkedList();
 let node1 = new LinkedNode(11);
 let node2 = new LinkedNode(22);
 let node3 = new LinkedNode(33);
+let node4 = new LinkedNode(44);
 list.insertHead(node1);
 list.insertHead(node2);
-list.insertHead(node3);
+list.insertTail(node4);
+list.insertTail(node3);
 console.log(list);
 list.print();
