@@ -12,7 +12,7 @@ class BSTNode {
 
 class BinarySearchTree {
 	constructor() {
-		this.root = null;
+		this.root = null; //new BSTNode(); //有头结点
 		this.count = 0;
 	}
 
@@ -24,18 +24,91 @@ class BinarySearchTree {
 		return this.count;
 	}
 
-	insert(value) {}
+	/**
+	 * 以头结点的左子树为顶结点
+	 * @param {BSTNode} node
+	 */
+	insert(node) {
+		if (this.isEmpty()) {
+			this.root = node;
+			this.count++;
+			return;
+		}
+		this.insetRecusive(this.root, node);
+	}
 
-	remove(value) {}
+	/**
+	 * @param {BSTNode} root 子树
+	 * @param {BSTNode} node 插入的数据
+	 * @returns {boolean}
+	 */
+	insetRecusive(root, node) {
+		if (!root || root.value === node.value) {
+			return false;
+		}
+
+		if (node.value < root.value) {
+			if (root.left) {
+				this.insetRecusive(root.left, node);
+			} else {
+				root.left = node;
+				this.count++;
+			}
+		} else if (node.value > root.value) {
+			if (root.right) {
+				this.insetRecusive(root.right, node);
+			} else {
+				root.right = node;
+				this.count++;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @param {BSTNode} node
+	 * @returns {boolean}
+	 */
+	remove(node) {}
 
 	/**前序遍历*/
-	preOrderTraversal() {}
+	preOrderTraversal() {
+		let res = [];
+		let traversal = (root) => {
+			if (!root) return;
+			res.push(root.value);
+			traversal(root.left);
+			traversal(root.right);
+		};
+		traversal(this.root);
+		return res;
+	}
 
 	/**中序遍历*/
-	inOrderTraversal() {}
+	inOrderTraversal() {
+		let res = [];
+		let traversal = (root) => {
+			if (!root) return;
+			traversal(root.left);
+			res.push(root.value);
+			traversal(root.right);
+		};
+		traversal(this.root);
+		return res;
+	}
 
 	/**后序遍历*/
-	postOrderTraversal() {}
+	postOrderTraversal() {
+		let res = [];
+		let traversal = (root) => {
+			if (!root) return;
+			traversal(root.left);
+			traversal(root.right);
+			res.push(root.value);
+		};
+		traversal(this.root);
+		return res;
+	}
 
 	maxValue() {}
 
@@ -43,3 +116,19 @@ class BinarySearchTree {
 
 	destroy() {}
 }
+
+let bst = new BinarySearchTree();
+let node1 = new BSTNode(1);
+let node2 = new BSTNode(2);
+let node3 = new BSTNode(3);
+let node4 = new BSTNode(4);
+let node5 = new BSTNode(5);
+bst.insert(node2);
+bst.insert(node1);
+bst.insert(node4);
+bst.insert(node3);
+bst.insert(node5);
+console.log(bst);
+console.log(bst.preOrderTraversal());
+console.log(bst.inOrderTraversal());
+console.log(bst.postOrderTraversal());
