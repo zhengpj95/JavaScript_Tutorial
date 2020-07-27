@@ -110,11 +110,26 @@ class BinarySearchTree {
 		return res;
 	}
 
-	maxValue() {}
+	maxValue() {
+		if (this.isEmpty()) {
+			return null;
+		}
+		let res = this.inOrderTraversal();
+		return res[res.length - 1];
+	}
 
-	minValue() {}
+	minValue() {
+		if (this.isEmpty()) {
+			return null;
+		}
+		let res = this.inOrderTraversal();
+		return res[0];
+	}
 
-	destroy() {}
+	destroy() {
+		this.root = null;
+		this.count = 0;
+	}
 }
 
 let bst = new BinarySearchTree();
@@ -132,3 +147,7 @@ console.log(bst);
 console.log(bst.preOrderTraversal());
 console.log(bst.inOrderTraversal());
 console.log(bst.postOrderTraversal());
+console.log(`Max value: `, bst.maxValue());
+console.log(`Min value: `, bst.minValue());
+bst.destroy();
+console.log(bst);
