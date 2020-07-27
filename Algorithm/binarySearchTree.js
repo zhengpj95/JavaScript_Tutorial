@@ -110,20 +110,55 @@ class BinarySearchTree {
 		return res;
 	}
 
-	maxValue() {
-		if (this.isEmpty()) {
+	maxNodeValue() {
+		let root = this.root;
+		if (!root) {
 			return null;
 		}
-		let res = this.inOrderTraversal();
-		return res[res.length - 1];
+
+		while (root && root.right) {
+			root = root.right;
+		}
+		return root;
+	}
+
+	/**
+	 * @param {BSTNode} root
+	 * @returns {BSTNode}
+	 */
+	getMinNode(root) {
+		if (!root) {
+			return null;
+		}
+
+		while (root && root.left) {
+			root = root.left;
+		}
+		return root;
+	}
+
+	minNodeValue() {
+		return this.getMinNode(this.root);
+	}
+
+	maxValue() {
+		// if (this.isEmpty()) {
+		// 	return null;
+		// }
+		// let res = this.inOrderTraversal();
+		// return res[res.length - 1];
+		let maxNode = this.maxNodeValue();
+		return maxNode ? maxNode.value : null;
 	}
 
 	minValue() {
-		if (this.isEmpty()) {
-			return null;
-		}
-		let res = this.inOrderTraversal();
-		return res[0];
+		// if (this.isEmpty()) {
+		// 	return null;
+		// }
+		// let res = this.inOrderTraversal();
+		// return res[0];
+		let minNode = this.minNodeValue();
+		return minNode ? minNode.value : null;
 	}
 
 	destroy() {
@@ -149,5 +184,7 @@ console.log(bst.inOrderTraversal());
 console.log(bst.postOrderTraversal());
 console.log(`Max value: `, bst.maxValue());
 console.log(`Min value: `, bst.minValue());
-bst.destroy();
-console.log(bst);
+// bst.destroy();
+// console.log(bst);
+console.log(bst.minNodeValue());
+console.log(bst.maxNodeValue());
