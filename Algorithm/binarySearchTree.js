@@ -67,9 +67,50 @@ class BinarySearchTree {
 
 	/**
 	 * @param {BSTNode} node
+	 */
+	remove(node) {
+		this.removeRecusive(this.root, node);
+	}
+
+	/**
+	 * @param {BSTNode} root
+	 * @param {BSTNode} node
 	 * @returns {boolean}
 	 */
-	remove(node) {}
+	removeRecusive(root, node) {
+		if (!root) {
+			return false;
+		}
+
+		if (node.value < root.value) {
+			this.removeRecusive(root.left, node);
+		} else if (node.value > root.value) {
+			this.removeRecusive(root.right, node);
+		} else {
+			// find
+			// 无left，无right
+			if (root.left === null && root.right === null) {
+				root = null;
+				this.count--;
+				return true;
+			} else if (root.right) {
+				root = root.left;
+				this.count--;
+				return true;
+			} else if (root.left) {
+				root = root.right;
+				this.count--;
+				return true;
+			} else {
+				// 从右子树中找到最小值作为新的节点
+				let minNode = this.getMinNode(root.right);
+				root.value = minNode.value;
+				this.removeRecusive(root.right, minNode);
+				this.count--;
+				return true;
+			}
+		}
+	}
 
 	/**前序遍历*/
 	preOrderTraversal() {
@@ -188,3 +229,6 @@ console.log(`Min value: `, bst.minValue());
 // console.log(bst);
 console.log(bst.minNodeValue());
 console.log(bst.maxNodeValue());
+console.log(`================remove================`);
+bst.remove(node3);
+console.log(bst.inOrderTraversal());
