@@ -76,44 +76,51 @@ class BinarySearchTree {
 		if (!(node instanceof BSTNode)) {
 			newNode = new BSTNode(node);
 		}
-		this.removeRecusive(this.root, newNode);
+		this.removeRecusive(this.root, this.root, true, newNode);
 	}
 
 	/**
 	 * @param {BSTNode} root
+	 * @param {BSTNode} parent
+	 * @param {boolean} isLeft
 	 * @param {BSTNode} node
 	 * @returns {boolean}
 	 */
-	removeRecusive(root, node) {
-		if (!root) {
+	removeRecusive(root, parent, isLeft, node) {
+		// 未找到的直接return false
+		if (!root || !parent) {
 			return false;
 		}
-
 		if (node.value < root.value) {
-			this.removeRecusive(root.left, node);
+			this.removeRecusive(root.left, root, true, node);
 		} else if (node.value > root.value) {
-			this.removeRecusive(root.right, node);
+			this.removeRecusive(root.right, root, false, node);
 		} else {
 			// find
 			// 无left，无right
 			if (root.left === null && root.right === null) {
-				root = null;
+				if (isLeft) {
+					parent.left = null;
+				} else {
+					parent.right = null;
+				}
 				this.count--;
 				return true;
-			}
-			if (root.right === null) {
-				root = root.left;
+			} else if (root.right === null) {
+				parent = root;
+				parent.left = null;
 				this.count--;
 				return true;
 			} else if (root.left === null) {
-				root = root.right;
+				parent = root;
+				parent.right = null;
 				this.count--;
 				return true;
 			} else {
 				// 从右子树中找到最小值作为新的节点
 				let minNode = this.getMinNode(root.right);
 				root.value = minNode.value;
-				this.removeRecusive(root.right, minNode);
+				this.removeRecusive(root.right, root, false, minNode);
 				this.count--;
 				return true;
 			}
@@ -227,10 +234,10 @@ bst.insert(node1);
 bst.insert(node4);
 bst.insert(node3);
 bst.insert(node5);
-console.log(bst);
-console.log(bst.preOrderTraversal());
-console.log(bst.inOrderTraversal());
-console.log(bst.postOrderTraversal());
+// console.log(bst);
+// console.log(bst.preOrderTraversal());
+// console.log(bst.inOrderTraversal());
+// console.log(bst.postOrderTraversal());
 // console.log(`Max value: `, bst.maxValue());
 // console.log(`Min value: `, bst.minValue());
 // bst.destroy();
@@ -238,5 +245,6 @@ console.log(bst.postOrderTraversal());
 // console.log(bst.minNodeValue());
 // console.log(bst.maxNodeValue());
 console.log(`================remove================`);
-bst.remove(node3);
+console.log(bst.inOrderTraversal());
+bst.remove(2);
 console.log(bst.inOrderTraversal());
