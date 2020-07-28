@@ -25,16 +25,19 @@ class BinarySearchTree {
 	}
 
 	/**
-	 * 以头结点的左子树为顶结点
 	 * @param {BSTNode} node
 	 */
 	insert(node) {
+		let newNode = node;
+		if (!(node instanceof BSTNode)) {
+			newNode = new BSTNode(node);
+		}
 		if (this.isEmpty()) {
-			this.root = node;
+			this.root = newNode;
 			this.count++;
 			return;
 		}
-		this.insetRecusive(this.root, node);
+		this.insertRecusive(this.root, newNode);
 	}
 
 	/**
@@ -42,21 +45,21 @@ class BinarySearchTree {
 	 * @param {BSTNode} node 插入的数据
 	 * @returns {boolean}
 	 */
-	insetRecusive(root, node) {
+	insertRecusive(root, node) {
 		if (!root || root.value === node.value) {
 			return false;
 		}
 
 		if (node.value < root.value) {
 			if (root.left) {
-				this.insetRecusive(root.left, node);
+				this.insertRecusive(root.left, node);
 			} else {
 				root.left = node;
 				this.count++;
 			}
 		} else if (node.value > root.value) {
 			if (root.right) {
-				this.insetRecusive(root.right, node);
+				this.insertRecusive(root.right, node);
 			} else {
 				root.right = node;
 				this.count++;
@@ -69,7 +72,11 @@ class BinarySearchTree {
 	 * @param {BSTNode} node
 	 */
 	remove(node) {
-		this.removeRecusive(this.root, node);
+		let newNode = node;
+		if (!(node instanceof BSTNode)) {
+			newNode = new BSTNode(node);
+		}
+		this.removeRecusive(this.root, newNode);
 	}
 
 	/**
@@ -93,11 +100,12 @@ class BinarySearchTree {
 				root = null;
 				this.count--;
 				return true;
-			} else if (root.right) {
+			}
+			if (root.right === null) {
 				root = root.left;
 				this.count--;
 				return true;
-			} else if (root.left) {
+			} else if (root.left === null) {
 				root = root.right;
 				this.count--;
 				return true;
@@ -223,12 +231,12 @@ console.log(bst);
 console.log(bst.preOrderTraversal());
 console.log(bst.inOrderTraversal());
 console.log(bst.postOrderTraversal());
-console.log(`Max value: `, bst.maxValue());
-console.log(`Min value: `, bst.minValue());
+// console.log(`Max value: `, bst.maxValue());
+// console.log(`Min value: `, bst.minValue());
 // bst.destroy();
 // console.log(bst);
-console.log(bst.minNodeValue());
-console.log(bst.maxNodeValue());
+// console.log(bst.minNodeValue());
+// console.log(bst.maxNodeValue());
 console.log(`================remove================`);
 bst.remove(node3);
 console.log(bst.inOrderTraversal());
