@@ -127,6 +127,28 @@ class BinarySearchTree {
 		}
 	}
 
+	/**
+	 * @param {BSTNode} node
+	 * @returns {BSTNode}
+	 */
+	search(node) {
+		let newNode = node;
+		if (!(node instanceof BSTNode)) {
+			newNode = new BSTNode(node);
+		}
+		if (this.isEmpty()) {
+			return null;
+		}
+		return this.searchRecusive(this.root, node);
+	}
+
+	/**
+	 * @param {BSTNode} root
+	 * @param {BSTNode} node
+	 * @returns {BSTNode}
+	 */
+	searchRecusive(root, node) {}
+
 	/**前序遍历*/
 	preOrderTraversal() {
 		let res = [];
