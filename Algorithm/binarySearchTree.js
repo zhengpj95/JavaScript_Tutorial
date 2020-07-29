@@ -139,7 +139,7 @@ class BinarySearchTree {
 		if (this.isEmpty()) {
 			return null;
 		}
-		return this.searchRecusive(this.root, node);
+		return this.searchRecusive(this.root, newNode);
 	}
 
 	/**
@@ -147,7 +147,20 @@ class BinarySearchTree {
 	 * @param {BSTNode} node
 	 * @returns {BSTNode}
 	 */
-	searchRecusive(root, node) {}
+	searchRecusive(root, node) {
+		if (!root) {
+			return null;
+		}
+
+		if (root.value == node.value) {
+			return root;
+		}
+		if (node.value < root.value) {
+			return this.searchRecusive(root.left, node);
+		} else {
+			return this.searchRecusive(root.right, node);
+		}
+	}
 
 	/**前序遍历*/
 	preOrderTraversal() {
@@ -268,5 +281,6 @@ bst.insert(node5);
 // console.log(bst.maxNodeValue());
 console.log(`================remove================`);
 console.log(bst.inOrderTraversal());
+console.log(bst.search(node4));
 bst.remove(2);
 console.log(bst.inOrderTraversal());
