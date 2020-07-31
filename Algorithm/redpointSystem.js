@@ -138,3 +138,13 @@ class RedPointSystem {
 		return result;
 	}
 }
+
+let sys = new RedPointSystem();
+sys.saveData(1, 'first', 'second', 'third', 1, 'aaa');
+console.log(sys.getData('first', 'second', 'third', 1)); //true
+console.log(sys.getData('first', 'second', 'third', 2)); //false
+sys.saveData(false, 'first', 'second', 'newthird');
+// sys.saveData(1, 'first', 'second', 'third', 1); //下层有值，不可设置
+console.log(sys.datas);
+console.log(sys.getData('first', 'second')); //true
+console.log(sys.getData('first', 'second', 'newthird')); //false
