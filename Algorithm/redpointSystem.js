@@ -55,7 +55,15 @@ class RedPointSystem {
 	 * @param  {...any} params
 	 * @returns {boolean}
 	 */
-	getData(...params) {}
+	getData(...params) {
+		let keys = [];
+		if (params && params.length) {
+			for (let i = 0; i < params.length; i++) {
+				keys.push(this.getObjectName(params[i]));
+			}
+		}
+		return this.read(this.datas, 0, keys);
+	}
 
 	/**
 	 * @param {any} obj
@@ -63,13 +71,45 @@ class RedPointSystem {
 	 * @param {string[]} keyList
 	 * @returns {boolean}
 	 */
-	read(obj, index, keyList) {}
+	read(obj, index, keyList) {
+		let key = keyList[index];
+		if (index < keyList.length) {
+			if (index < keyList.length - 1 && obj[key]) {
+				// 未到查找位置，继续递归查找
+				return this.read(obj[key], index + 1, keyList);
+			} else {
+				// 已到查找位置
+				if (obj) {
+					return this.getObjectValue(obj[key]);
+				} else {
+					return false;
+				}
+			}
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * @param {any} obj
 	 * @returns {boolean}
 	 */
-	getObjectValue(obj) {}
+	getObjectValue(obj) {
+		if (typeof obj === 'boolean') {
+			return obj;
+		} else if (typeof obj === 'object') {
+			let result = false;
+			for (let key in obj) {
+				result = this.getObjectValue(obj[key]);
+				if (result) {
+					break;
+				}
+			}
+			return result;
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * @param {any} obj
