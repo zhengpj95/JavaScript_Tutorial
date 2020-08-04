@@ -5,6 +5,7 @@
 /**
  * 朴素的模式匹配
  * Time complexity: O(m*n)
+ * Space complexity: O(1)
  * @param {string} str 
  * @param {string} pattern 
  */
@@ -29,8 +30,40 @@ const substringSearch = function (str, pattern) {
 	}
 };
 
-let p = 'abcac';
+/**
+ * KMP算法
+ * Time complexity: O(m+n)  m: str.length, n: pattern.length
+ * Space complexity: O(n)	n: pattern.length
+ * @param {string} str 
+ * @param {string} pattern 
+ */
+const kmpSearch = function (str, pattern) {
+	// next 数组
+	let next = [];
+	let getNext = (pat) => {
+		let table = [0];
+		for (let i = 0, j = 1; i < pat.length && j < pat.length;) {
+			if (pat[i] == pat[j]) {
+				table[j] = table[j - 1] + 1;
+				j++;
+				i++;
+			} else {
+				table[j] = 0;
+				j++;
+				i = 0;
+			}
+		}
+		return table;
+	};
+	next = getNext(pattern);
+
+	console.log(next);
+};
+
+let p = 'abcac'; //'dsgwadsgzds'
 let s = 'ababcabcacbab';
 console.time();
 console.log(substringSearch(s, p));
 console.timeEnd();
+
+kmpSearch(s, 'dsgwadsgz');
