@@ -48,9 +48,16 @@ const kmpSearch = function (str, pattern) {
 				j++;
 				i++;
 			} else {
-				table[j] = 0;
-				j++;
-				i = 0;
+				// todo
+				if (i !== 0) {
+					i = table[i];
+				} else {
+					table[j] = 0;
+					j++;
+				}
+				// table[j] = 0;
+				// j++;
+				// i = 0;
 			}
 		}
 		return table;
