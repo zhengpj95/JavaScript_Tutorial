@@ -1,5 +1,6 @@
 /**
  * 字符串模式匹配
+ * 朴素的算法和kmp算法的时间复杂度差不多，故朴素的算法还是经常应用的
  */
 
 /**
@@ -64,13 +65,42 @@ const kmpSearch = function (str, pattern) {
 	};
 	next = getNext(pattern);
 
-	console.log(next);
+	console.log(`KMP的next数组：`, next);
+
+	let i = 0,
+		j = 0;
+	while (i < str.length && j < pattern.length) {
+		if (str[i] === pattern[j]) {
+			i++;
+			j++;
+		} else {
+			if (j !== 0) {
+				j = next[j - 1];
+			} else {
+				// 进入这一步时，j 必然已为0， i所在的字符已与j=0的字符已经匹配比较过
+				i++;
+				// j = 0;
+			}
+		}
+	}
+
+	console.log(`i = ${i}, j = ${j}`);
+	if (j >= pattern.length) {
+		return i - j;
+	} else {
+		return -1;
+	}
 };
 
 let p = 'abcac'; //'dsgwadsgzds'
 let s = 'ababcabcacbab';
+
+console.log(`=============朴素的算法=============`);
 console.time();
 console.log(substringSearch(s, p));
 console.timeEnd();
 
-kmpSearch(s, 'aabaabaaa');
+console.log(`=============kmp算法=============`);
+console.time();
+console.log(`KMP算法匹配位置（-1为不匹配）：`, kmpSearch(s, p));
+console.timeEnd();
