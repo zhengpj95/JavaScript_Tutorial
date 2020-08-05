@@ -14,12 +14,20 @@ const shellSort = function (nums) {
 	let gap = Math.floor(nums.length / 2);
 	while (gap > 0) {
 		for (let i = gap; i < nums.length; i++) {
+			// 这里相当于插入排序，找到最终的位置才插入，即是交换
 			let j = i;
 			let temp = nums[i];
 			for (; nums[j - gap] > temp; j -= gap) {
 				nums[j] = nums[j - gap];
 			}
 			nums[j] = temp;
+
+			// 每次比较成功的都交换
+			// for (let j = i; nums[j - gap] > nums[j]; j -= gap) {
+			// 	let temp = nums[j];
+			// 	nums[j] = nums[j - gap];
+			// 	nums[j - gap] = temp;
+			// }
 		}
 		gap = Math.floor(gap / 2);
 	}
