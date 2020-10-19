@@ -81,11 +81,19 @@ class PriorityQueue {
 		}
 	}
 
+	/**
+	 * 插入到最后的位置，然后上浮到正确的位置
+	 * @param {any} ele
+	 */
 	addElement(ele) {
 		this.list[++this.count] = ele;
 		this.swim(this.count);
 	}
 
+	/**
+	 * 第一个位置和最后一个位置交换，删除最后一个位置，然后第一个位置下层到正确位置
+	 * @returns {any}
+	 */
 	deleteElement() {
 		let max = this.list[1];
 		this.exchange(1, this.count);
