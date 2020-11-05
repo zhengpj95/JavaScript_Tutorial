@@ -13,9 +13,19 @@
  * 大堆
  */
 class PriorityQueue {
-	constructor() {
+	/**
+	 * 控制大堆还是小堆
+	 * 默认大堆
+	 * 1大堆，-1和0小堆
+	 * @param {number} a
+	 * @param {number} b
+	 */
+	compare = (a, b) => a - b;
+
+	constructor(compare = this.compare) {
 		this.count = 0;
 		this.list = [];
+		this.compare = compare;
 	}
 
 	isEmpty() {
@@ -26,8 +36,8 @@ class PriorityQueue {
 		return this.count;
 	}
 
-	getMax() {
-		return this.list[1];
+	getTop() {
+		return this.isEmpty() ? null : this.list[1];
 	}
 
 	getParent(k = 1) {
@@ -51,13 +61,14 @@ class PriorityQueue {
 
 	/**
 	 * 改变大小堆
-	 * > 大堆
-	 * < 小堆
+	 * < 大堆
+	 * > 小堆
 	 * @param {number} i
 	 * @param {number} j
 	 */
 	isLess(i, j) {
-		return this.list[i] < this.list[j];
+		// return this.list[i] < this.list[j];
+		return this.compare(this.list[i], this.list[j]) < 0;
 	}
 
 	/**上浮*/
@@ -85,7 +96,7 @@ class PriorityQueue {
 	 * 插入到最后的位置，然后上浮到正确的位置
 	 * @param {any} ele
 	 */
-	addElement(ele) {
+	enqueue(ele) {
 		this.list[++this.count] = ele;
 		this.swim(this.count);
 	}
@@ -94,7 +105,8 @@ class PriorityQueue {
 	 * 第一个位置和最后一个位置交换，删除最后一个位置，然后第一个位置下层到正确位置
 	 * @returns {any}
 	 */
-	deleteElement() {
+	dequeue() {
+		if (this.isEmpty()) return null;
 		let max = this.list[1];
 		this.exchange(1, this.count);
 		this.list[this.count--] = null;
@@ -103,14 +115,14 @@ class PriorityQueue {
 	}
 }
 
-let queue = new PriorityQueue();
-queue.addElement(3);
-queue.addElement(1);
-queue.addElement(4);
-queue.addElement(5);
-queue.addElement(2);
-queue.addElement(8);
-queue.addElement(9);
-console.log(queue.deleteElement());
-console.log(queue.getMax());
+let queue = new PriorityQueue((a, b) => a - b);
+queue.enqueue(3);
+queue.enqueue(1);
+queue.enqueue(4);
+queue.enqueue(5);
+queue.enqueue(2);
+queue.enqueue(8);
+queue.enqueue(9);
+console.log('deleteElement: ', queue.dequeue());
+console.log('topElement: ', queue.getTop());
 console.log(queue);
