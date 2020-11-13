@@ -127,6 +127,16 @@ class PriorityQueue {
 		}
 		return result;
 	}
+
+	/**
+	 * @param {any[]} data
+	 */
+	createHeap(data) {
+		for (let i = 0; i < data.length; i++) {
+			this.enqueue(data[i]);
+		}
+		// return this.list;
+	}
 }
 
 let queue = new PriorityQueue((a, b) => a > b);
@@ -139,6 +149,7 @@ queue.enqueue(5);
 queue.enqueue(2);
 queue.enqueue(8);
 queue.enqueue(9);
+queue.createHeap([80, 120, 15]);
 // console.log('deleteElement: ', queue.dequeue());
 console.log('topElement: ', queue.getTop());
 // console.log(queue);
