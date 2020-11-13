@@ -14,13 +14,13 @@
  */
 class PriorityQueue {
 	/**
-	 * 控制大堆还是小堆
-	 * 默认大堆
-	 * 1大堆，-1和0小堆
+	 * 控制大堆还是小堆，默认大堆
+	 * false: 大堆
+	 * true: 小堆
 	 * @param {number} a
 	 * @param {number} b
 	 */
-	compare = (a, b) => a - b;
+	compare = (a, b) => a > b;
 
 	constructor(compare = this.compare) {
 		this.count = 0;
@@ -60,33 +60,35 @@ class PriorityQueue {
 	}
 
 	/**
-	 * 改变大小堆
-	 * < 大堆
-	 * > 小堆
 	 * @param {number} i
 	 * @param {number} j
 	 */
-	isLess(i, j) {
-		// return this.list[i] < this.list[j];
-		return this.compare(this.list[i], this.list[j]) < 0;
+	isLarge(i, j) {
+		return this.compare(this.list[i], this.list[j]);
 	}
 
-	/**上浮*/
-	swim(k = 1) {
-		while (k > 1 && this.isLess(this.getParent(k), k)) {
+	/**
+	 * 上浮
+	 * 从最后一位开始上浮
+	 */
+	swim(k = this.count) {
+		while (k > 1 && this.isLarge(this.getParent(k), k)) {
 			this.exchange(this.getParent(k), k);
 			k = this.getParent(k);
 		}
 	}
 
-	/**下沉*/
+	/**
+	 * 下沉
+	 * 从top的位置开始下沉
+	 */
 	sink(k = 1) {
 		while (this.leftChildren(k) <= this.count) {
 			let max = this.leftChildren(k);
-			if (this.rightChildren(k) <= this.count && this.isLess(max, this.rightChildren(k))) {
+			if (this.rightChildren(k) <= this.count && this.isLarge(max, this.rightChildren(k))) {
 				max = this.rightChildren(k);
 			}
-			if (this.isLess(max, k)) break;
+			if (this.isLarge(max, k)) break;
 			this.exchange(k, max);
 			k = max;
 		}
@@ -98,7 +100,7 @@ class PriorityQueue {
 	 */
 	enqueue(ele) {
 		this.list[++this.count] = ele;
-		this.swim(this.count);
+		this.swim();
 	}
 
 	/**
@@ -110,19 +112,34 @@ class PriorityQueue {
 		let max = this.list[1];
 		this.exchange(1, this.count);
 		this.list[this.count--] = null;
-		this.sink(1);
+		this.sink();
 		return max;
+	}
+
+	/**
+	 * 堆排序
+	 * @returns {any[]}
+	 */
+	heapSort() {
+		let result = [];
+		while (this.count > 0) {
+			result.push(this.dequeue());
+		}
+		return result;
 	}
 }
 
-let queue = new PriorityQueue((a, b) => a - b);
+let queue = new PriorityQueue((a, b) => a > b);
 queue.enqueue(3);
 queue.enqueue(1);
 queue.enqueue(4);
+queue.enqueue(9);
+queue.enqueue(90);
 queue.enqueue(5);
 queue.enqueue(2);
 queue.enqueue(8);
 queue.enqueue(9);
-console.log('deleteElement: ', queue.dequeue());
+// console.log('deleteElement: ', queue.dequeue());
 console.log('topElement: ', queue.getTop());
-console.log(queue);
+// console.log(queue);
+console.log('heapSort: ', queue.heapSort().join('->'));
