@@ -14,9 +14,7 @@
  */
 class PriorityQueue {
 	/**
-	 * 控制大堆还是小堆，默认大堆
-	 * false: 大堆
-	 * true: 小堆
+	 * 控制大堆还是小堆，默认小堆
 	 * @param {number} a
 	 * @param {number} b
 	 */
@@ -139,18 +137,28 @@ class PriorityQueue {
 	}
 }
 
-let queue = new PriorityQueue((a, b) => a > b);
+// let queue = new PriorityQueue((a, b) => {
+// 	if (a[0] == b[0]) {
+// 		return a[1] < b[1];
+// 	}
+// 	return a[0] > b[0];
+// });
+// queue.enqueue([1, 66]);
+// queue.enqueue([1, 4]);
+// queue.enqueue([1, 114]);
+// queue.enqueue([2, 4]);
+// queue.enqueue([4, 5]);
+// queue.enqueue([44, 90]);
+// queue.enqueue([33, 9]);
+// console.log('topElement: ', queue.getTop());
+// console.log('heapSort: ', queue.heapSort());
+
+let queue = new PriorityQueue();
 queue.enqueue(3);
 queue.enqueue(1);
-queue.enqueue(4);
-queue.enqueue(9);
+queue.enqueue(33);
+queue.enqueue(54);
+queue.enqueue(12);
 queue.enqueue(90);
-queue.enqueue(5);
-queue.enqueue(2);
-queue.enqueue(8);
 queue.enqueue(9);
-queue.createHeap([80, 120, 15]);
-// console.log('deleteElement: ', queue.dequeue());
-console.log('topElement: ', queue.getTop());
-// console.log(queue);
-console.log('heapSort: ', queue.heapSort().join('->'));
+console.log(queue.heapSort());
