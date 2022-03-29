@@ -19,7 +19,7 @@ var person = new Person();
 
 什么是原型？每一个JavaScript对象（null除外）在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型“继承”属性。
 
-![1553574565370](F:\self_study\JavaScript_study\Advanced_JavaScript\1553574565370.png)
+![1553574565370](./1553574565370.png)
 
 ## 3. `__proto__`
 
@@ -29,7 +29,7 @@ var person = new Person();
 console.log(person.__proto__ === Person.prototype)  // true
 ```
 
-![1553574931240](F:\self_study\JavaScript_study\Advanced_JavaScript\1553574931240.png)
+![1553574931240](./1553574931240.png)
 
 ## 4. `constructor`
 
@@ -42,7 +42,7 @@ console.log(Person === Person.prototype.constructor);
 // true
 ```
 
-![1553575050039](F:\self_study\JavaScript_study\Advanced_JavaScript\1553575050039.png)
+![1553575050039](./1553575050039.png)
 
 所以，综上：
 
@@ -65,7 +65,7 @@ obj.name = 'Kevin'
 console.log(obj.name) // Kevin
 ```
 
-![1553575285544](F:\self_study\JavaScript_study\Advanced_JavaScript\1553575285544.png)
+![1553575285544](./1553575285544.png)
 
 ## 6. 原型链
 
@@ -77,7 +77,7 @@ console.log(Object.prototype.__proto__ === null) // true
 
 查找属性的时候查到 Object.prototype 就可以停止查找了
 
-![1553575388129](F:\self_study\JavaScript_study\Advanced_JavaScript\1553575388129.png)
+![1553575388129](./1553575388129.png)
 
 ## 补充
 
