@@ -83,7 +83,7 @@ str1 instanceof String // true
 - 转换为数字
 - 转换为字符串
 
-![1553695878100](E:\git_project\JavaScript\md\Interview-Question\1553695878100.png)
+![1553695878100](./1553695878100.png)
 
 ### 转Boolean
 
@@ -134,9 +134,9 @@ MVC，MVP和MVVM都是常见的软件架构设计模式，它通过分离关注�
 - P (Presenter)
 - VM (View-Model)
 
-![1553736938765](E:\git_project\JavaScript\md\Interview-Question\1553736938765.png)
+![1553736938765](./1553736938765.png)
 
-![1553738320286](E:\git_project\JavaScript\md\Interview-Question\1553738320286.png)
+![1553738320286](./1553738320286.png)
 
 - 视图（View）：用户界面。
 - 控制器（Controller）：业务逻辑
@@ -145,7 +145,7 @@ MVC，MVP和MVVM都是常见的软件架构设计模式，它通过分离关注�
 - 控制器是模型和视图之间的纽带，MVC将响应机制封装在controller对象中，当用户和你的应用产生交互时，控制器中的事件触发器就开始工作了。
 - 可以明显感觉到，MVC模式的业务逻辑主要集中在Controller，而前端的View其实已经具备了独立处理用户事件的能力，当每个事件都流经Controller时，这层会变得**十分臃肿**。
 
-![1553736959914](E:\git_project\JavaScript\md\Interview-Question\1553736959914.png)
+![1553736959914](./1553736959914.png)
 
 - MVP 是MVC模式的改良
 - Controller/Presenter负责业务逻辑，Model管理数据，View负责显示。
@@ -153,7 +153,7 @@ MVC，MVP和MVVM都是常见的软件架构设计模式，它通过分离关注�
 - 与MVC相比，MVP模式通过解耦View和Model，完全分离视图和模型使职责划分更加清晰；由于View不依赖Model，可以将View抽离出来做成组件，它只需要提供一系列接口提供给上层操作。
 - Presenter作为View和Model之间的“中间人”，除了基本的业务逻辑外，还有大量代码需要对从View到Model和从Model到View的数据进行“手动同步”，这样Presenter显得很**重**，维护起来会比较困难。而且由于没有数据绑定，如果Presenter对视图渲染的需求增多，它不得不过多关注特定的视图，一旦视图需求发生改变，Presenter也需要改动。
 
-![1553736978713](E:\git_project\JavaScript\md\Interview-Question\1553736978713.png)
+![1553736978713](./1553736978713.png)
 
 - Model称为数据层，因为它仅仅关注数据本身，不关心任何行为。格式化数据由View负责
 - MVVM中的View通过使用模板语法来声明式的将数据渲染进DOM，当ViewModel对Model进行更新的时候，会通过数据绑定更新到View。
